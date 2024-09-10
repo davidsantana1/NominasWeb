@@ -1,4 +1,5 @@
-# Funcionalidades
+# Sistema de Gestión de Nóminas
+## Funcionalidades
 1. Gestión de empleados
 2. Gestión de Departamentos
 3. Gestión de Puestos

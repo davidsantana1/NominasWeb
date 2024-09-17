@@ -42,7 +42,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 				TempData["success"] = "Transacción creada correctamente.";
 				return RedirectToAction("Index");
 			}
-			return View();
+			return View(obj);
 		}
 
 		public IActionResult Editar(int? id)

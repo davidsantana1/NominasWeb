@@ -9,7 +9,6 @@ public class RegistroTransaccion
 	[Required]
 	public int EmpleadoId { get; set; }
 	public Empleado Empleado { get; set; }
-	[Required]
 	public decimal? Ingreso { get; set; }
 	public decimal? Deduccion { get; set; }
 	[DisplayName("Tipo de Transacción")]

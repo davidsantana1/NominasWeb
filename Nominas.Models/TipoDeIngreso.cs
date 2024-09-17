@@ -12,5 +12,6 @@ public class TipoDeIngreso
     [Required]
     public bool DependeDeSalario { get; set; }
     [Required]
-    public string Estado { get; set; }
+    public bool Estado { get; set; }
+    public decimal Porcentaje { get; set; }
 }

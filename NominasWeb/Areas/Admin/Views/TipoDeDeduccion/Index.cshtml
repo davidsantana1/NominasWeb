@@ -29,6 +29,7 @@
 						<th scope="col">#</th>
 						<th scope="col">Nombre</th>
 						<th scope="col">¿Depende del Salario?</th>
+						<th scope="col">Porcentaje</th>
 						<th scope="col">Estado</th>
 						<th></th>
 					</tr>
@@ -48,7 +49,15 @@
 							{
 								<td>No</td>
 							}
-							<td>@tipoDeDeduccion.Estado</td>
+							<td>@tipoDeDeduccion.Porcentaje%</td>
+							@if (tipoDeDeduccion.Estado == true)
+							{
+								<td>Activo</td>
+							}
+							else
+							{
+								<td>Inactivo</td>
+							}
 							<td class="d-flex justify-content-end">
 								<div class="w-100">
 									<a asp-controller="TipoDeDeduccion" asp-action="Editar" asp-route-id="@tipoDeDeduccion.Id" class="btn btn-primary mx-2">

@@ -42,14 +42,16 @@
 						<tr>
 							<td>@transaccion.Id</td>
 							<td>@transaccion.Empleado.Nombre</td>
-							@if (transaccion.Ingreso != null && transaccion.Ingreso != 0)
-							{
-								<td>@transaccion.Ingreso</td>
-							}
-							else
-							{
-								<td>@transaccion.Deduccion</td>
-							}
+							<td>
+								@if (transaccion.Ingreso != null && transaccion.Ingreso != 0)
+								{
+									<span>RD$@transaccion.Ingreso.Value.ToString("N2")</span>
+								}
+								else
+								{
+									<span>RD$@transaccion.Deduccion.Value.ToString("N2")</span>
+								}
+							</td>
 							<td>@transaccion.TipoTransaccion</td>
 							<td>@transaccion.Fecha</td>
 							<td>@transaccion.Estado</td>

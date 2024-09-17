@@ -29,8 +29,16 @@
 					<label asp-for="DependeDeSalario" class="ms-2"></label>
 				</div>
 				<div class="form-floating py-2 col-12">
-					<input disabled asp-for="Estado" class="form-control border-0 shadow">
+					<select disabled asp-for="Estado" class="form-select border-0 shadow" id="Estado">
+						<option disabled selected>--Estado--</option>
+						<option value="true">Activo</option>
+						<option value="false">Inactivo</option>
+					</select>
 					<label asp-for="Estado" class="ms-2"></label>
+				</div>
+				<div class="form-floating py-2 col-12">
+					<input disabled asp-for="Porcentaje" class="form-control border-0 shadow">
+					<label asp-for="Porcentaje" class="ms-2"></label>
 				</div>
 
 				<div class="row pt-2">

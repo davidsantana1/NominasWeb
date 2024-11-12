@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Nominas.DataAccess.Repository.IRepository;
 using Nominas.Models;
+using Nominas.Utility;
 
 namespace NominasWeb.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
 	public class DepartamentoController : Controller
 	{
 		private readonly IUnitOfWork _unitOfWork;
@@ -21,6 +24,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 			return View(objDepartamentoList);
 		}
 
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Crear()
 		{
 			var empleados = _unitOfWork.Empleado.GetAll();
@@ -31,6 +35,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Crear(Departamento obj)
 		{
 			obj.ResponsableDeArea = _unitOfWork.Empleado.Get(u => u.Id == obj.ResponsableDeAreaId);
@@ -45,6 +50,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 			return View();
 		}
 
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Editar(int? id)
 		{
 			var responsablesDeArea = _unitOfWork.Empleado.GetAll().ToList();
@@ -64,6 +70,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Editar(Departamento obj)
 		{
 			if (ModelState.IsValid)
@@ -76,6 +83,8 @@ namespace NominasWeb.Areas.Admin.Controllers
 			return View();
 		}
 
+
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Eliminar(int? id)
 		{
 			var responsablesDeArea = _unitOfWork.Empleado.GetAll().ToList();
@@ -95,6 +104,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 		}
 
 		[HttpPost, ActionName("Eliminar")]
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult EliminarPOST(int? id)
 		{
 			Departamento obj = _unitOfWork.Departamento.Get(u => u.Id == id);

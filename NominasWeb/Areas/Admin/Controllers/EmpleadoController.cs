@@ -1,12 +1,15 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Nominas.DataAccess.Repository.IRepository;
 using Nominas.Models;
+using Nominas.Utility;
 
 namespace NominasWeb.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
 	public class EmpleadoController : Controller
 	{
 		private readonly IUnitOfWork _unitOfWork;
@@ -21,7 +24,6 @@ namespace NominasWeb.Areas.Admin.Controllers
 		.ToList();
 			return View(objEmpleadoList);
 		}
-
 		public IActionResult Empleados(int? id)
 		{
 			if (id == null)
@@ -73,7 +75,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 
 			return View("Index", objEmpleadoList);
 		}
-
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Crear()
 		{
 			var departamentos = _unitOfWork.Departamento.GetAll().ToList();
@@ -86,6 +88,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Crear(Empleado obj)
 		{
 			obj.Departamento = _unitOfWork.Departamento.Get(d => d.Id == obj.DepartamentoId);
@@ -100,7 +103,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 			}
 			return View();
 		}
-
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Editar(int? id)
 		{
 			var departamentos = _unitOfWork.Departamento.GetAll().ToList();
@@ -122,6 +125,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Editar(Empleado obj)
 		{
 			if (ModelState.IsValid)
@@ -133,7 +137,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 			}
 			return View();
 		}
-
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Eliminar(int? id)
 		{
 			var departamentos = _unitOfWork.Departamento.GetAll().ToList();
@@ -155,6 +159,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 		}
 
 		[HttpPost, ActionName("Eliminar")]
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult EliminarPOST(int? id)
 		{
 			Empleado obj = _unitOfWork.Empleado.Get(e => e.Id == id);

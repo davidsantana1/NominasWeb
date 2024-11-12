@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Nominas.DataAccess.Data;
 using Nominas.Models;
+using Nominas.Utility;
 
 namespace NominasWeb.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
 	public class TipoDeDeduccionController : Controller
 	{
 		private readonly ApplicationDbContext _db;
@@ -18,13 +21,14 @@ namespace NominasWeb.Areas.Admin.Controllers
 			List<TipoDeDeduccion> objPuestoList = _db.TiposDeDeducciones.ToList();
 			return View(objPuestoList);
 		}
-
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Crear()
 		{
 			return View();
 		}
 
 		[HttpPost]
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Crear(TipoDeDeduccion obj)
 		{
 			if (ModelState.IsValid)
@@ -36,7 +40,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 			}
 			return View();
 		}
-
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Editar(int? id)
 		{
 			if (id == null || id == 0)
@@ -53,6 +57,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Editar(TipoDeDeduccion obj)
 		{
 			if (ModelState.IsValid)
@@ -65,7 +70,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 
 			return View();
 		}
-
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Eliminar(int? id)
 		{
 			if (id == null || id == 0)
@@ -81,6 +86,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 		}
 
 		[HttpPost, ActionName("Eliminar")]
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult EliminarPOST(int? id)
 		{
 			TipoDeDeduccion? obj = _db.TiposDeDeducciones.Find(id);

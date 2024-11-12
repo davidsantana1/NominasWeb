@@ -38,6 +38,11 @@
 					<label asp-for="Estado" class="ms-2"></label>
 					<span asp-validation-for="Estado" class="text-danger"></span>
 				</div>
+				<div class="form-floating py-2 col-12">
+					<input asp-for="Porcentaje" class="form-control border-0 shadow">
+					<label asp-for="Porcentaje" class="ms-2"></label>
+					<span asp-validation-for="Porcentaje" class="text-danger"></span>
+				</div>
 
 				<div class="row pt-2">
 					<div class="col-6 col-md-3">
@@ -47,11 +52,7 @@
 						<a asp-controller="TipoDeDeduccion" asp-action="Index" class="btn btn-outline-primary border form-control">Volver a la Lista</a>
 					</div>
 				</div>
-				<div class="form-floating py-2 col-12">
-					<input asp-for="Porcentaje" class="form-control border-0 shadow">
-					<label asp-for="Porcentaje" class="ms-2"></label>
-					<span asp-validation-for="Porcentaje" class="text-danger"></span>
-				</div>
+
 			</div>
 
 		</form>

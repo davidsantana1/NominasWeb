@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Nominas.DataAccess.Repository.IRepository;
 using Nominas.Models;
+using Nominas.Utility;
 
 namespace NominasWeb.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
 	public class RegistroTransaccionController : Controller
 	{
 		private readonly IUnitOfWork _unitOfWork;
@@ -20,7 +23,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 			List<RegistroTransaccion> objRegistroTransaccionList = _unitOfWork.RegistroTransaccion.GetAll().Include(e => e.Empleado).ToList();
 			return View(objRegistroTransaccionList);
 		}
-
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Crear()
 		{
 			var empleados = _unitOfWork.Empleado.GetAll();
@@ -31,6 +34,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Crear(RegistroTransaccion obj)
 		{
 			obj.Empleado = _unitOfWork.Empleado.Get(u => u.Id == obj.EmpleadoId);
@@ -44,7 +48,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 			}
 			return View(obj);
 		}
-
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Editar(int? id)
 		{
 			var empleados = _unitOfWork.Empleado.GetAll().ToList();
@@ -64,6 +68,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Editar(RegistroTransaccion obj)
 		{
 			if (ModelState.IsValid)
@@ -75,7 +80,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 			}
 			return View();
 		}
-
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult Eliminar(int? id)
 		{
 			var empleados = _unitOfWork.Empleado.GetAll().ToList();
@@ -95,6 +100,7 @@ namespace NominasWeb.Areas.Admin.Controllers
 		}
 
 		[HttpPost, ActionName("Eliminar")]
+		[Authorize(Roles = SD.Role_Admin)]
 		public IActionResult EliminarPOST(int? id)
 		{
 			RegistroTransaccion obj = _unitOfWork.RegistroTransaccion.Get(u => u.Id == id);
